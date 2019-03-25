@@ -1,3 +1,7 @@
+# Learning React.js (2018) 
+This bulletin board app follows a tutorial on Lynda.com led by Eve Porcello 
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

@@ -15,6 +15,32 @@ class Board extends Component {
         this.nextId = this.nextId.bind(this)
     }
 
+    componentWillMount(){
+        var self = this;
+        if(this.props.count){
+            fetch(`https://baconipsum.com/api/?type=all-meat&sentences=${this.props.count}`)
+                .then(response => response.json())
+                .then(json => json[0]
+                    .split('. ')
+                    .forEach(sentence => self.add(sentence.substring(0, 25))));
+        }
+    }
+
+    componentDidUpdate(){
+        var textArea;
+        if(this.state.editing){
+            textArea = this._newText;
+            textArea.focus();
+            textArea.select();
+        }
+    }
+
+    shouldComponentUpdate(nextProps, nextState){
+        return(
+            this.props.children !== nextProps.children || this.state !== nextState
+        )
+    }
+
     add(text){
         this.setState(prevState => ({
             notes: [
@@ -50,8 +76,8 @@ class Board extends Component {
 
     eachNote(note, i){
         return (
-            <Note key = {i}
-                index = {i}
+            <Note key = {note.id}
+                index = {note.id}
                 onChange={this.update}
                 onRemove={this.remove}>
                 {note.note}
